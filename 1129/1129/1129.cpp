@@ -2,29 +2,33 @@
 //
 
 #include <iostream>
-#include <vector>
-#include <map>
 
 int main()
 {
-	std::map<int, int> mp;
-	std:: vector<int> v{1,1,2,2,3,3};
-	for (int i : v)
+	int n = 0;
+	int Result = 0;
+
+
+	std::cin >> n;
+	int* nPtr = new int[n];
+
+	for (int i = 0; i < n; i++)
 	{
-		if (mp[i])
+		std::cin >> nPtr[i];
+	}
+
+	int v = 0;
+	std::cin >> v;
+	int r = 0;
+
+	for (int i = 0; i < n; i++)
+	{
+		if (nPtr[i] == v)
 		{
-			continue;
-		}
-		else
-		{
-			mp[i] = 1;
+			r++;
 		}
 	}
 
-	std::vector<int> ret;
-	for (auto it : mp)
-	{
-		ret.push_back(it.first);
-	}
+	std::cout << r;
 }
 
