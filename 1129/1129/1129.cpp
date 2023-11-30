@@ -2,6 +2,7 @@
 //
 
 #include <iostream>
+#include <algorithm>
 
 std::string s, temp;
 int main() 
