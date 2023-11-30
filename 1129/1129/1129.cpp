@@ -2,41 +2,47 @@
 //
 
 #include <iostream>
+#include<algorithm>
+#include <vector>
 
-int main()
+
+using namespace std;
+int a[9], sum;
+std::vector<int> v;
+pair<int, int> ret;
+
+void solve()
 {
-	int count = 0;			//과목수
-
-	std::cin >> count;
-	float* scorePtr = new float[count];
-
-	for (int i = 0; i < count; i++)
+	for (int i = 0; i < 9; i++)
 	{
-		std::cin >> scorePtr[i];
-	}
-	
-	float max = scorePtr[0];
-	float prevMax;
-	for (int i = 1; i < count; i++)
-	{
-		if (scorePtr[i] > max)
+		for (int j = 0; j < i; j++)
 		{
-			max = scorePtr[i];
+			if (sum - a[i] - a[j] == 100)
+			{
+				ret = { i, j };
+				return;
+			}
 		}
 	}
-
-	for (int i = 0; i < count; i++)
-	{
-		scorePtr[i] = (scorePtr[i] / max) * 100;
-	}
-
-	float TotalScore = 0.f;
-	for (int i = 0; i < count; i++)
-	{
-		TotalScore += scorePtr[i];
-	}
-
-	float result = TotalScore / count;
-	std::cout << result;
 }
 
+int main() 
+{
+
+	for (int i = 0; i < 9; i++) {
+		cin >> a[i];
+		sum += a[i];
+	}
+	solve();
+	for (int i = 0; i < 9; i++) 
+	{
+		if (ret.first == i || ret.second == i) continue;
+		v.push_back(a[i]);
+	}
+	sort(v.begin(), v.end());
+	for (int i = 0; i < v.size(); i++)
+	{
+		cout << v[i] << " ";
+	}
+	return 0;
+}
