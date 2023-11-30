@@ -26,6 +26,20 @@ void solve()
 	}
 }
 
+void makePermutation(int n, int r, int depth) {
+	if (r == depth) {
+		solve();
+		return;
+	}
+	for (int i = depth; i < n; i++) 
+	{
+		swap(a[i], a[depth]);
+		makePermutation(n, r, depth + 1);
+		swap(a[i], a[depth]);
+	}
+	return;
+}
+
 int main() 
 {
 
