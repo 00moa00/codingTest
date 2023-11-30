@@ -3,35 +3,41 @@
 
 #include <iostream>
 #include <algorithm>
+#include <string>
 
 int main() 
 {
-    int memberCount = 0;    //멤버수
-    int cnt[26] = {0,};            //알파벳
-    std::string memberName;          //멤버 이름
-    std::string ret;
+    std::string str;
 
-    std::cin >> memberCount;
-    for (int i = 0; i < memberCount; i++)
+    std::getline(std::cin, str);
+    for (int i = 0; i < str.size(); i++)
     {
-        std::cin >> memberName;
-        cnt[memberName[0] - 'a'] ++;    //첫글자만 필요
-    }
-
-    for (int i = 0; i < 26; i++)
-    {
-        if (cnt[i] >= 5)
+        // 대문자
+        if (str[i] >= 65 && str[i] < 97)
         {
-            ret += i + 'a';
+            if (str[i] + 13 > 90)
+            {
+                str[i] = str[i] + 13 - 26;
+            }
+            else
+            {
+                str[i] = str[i] + 13;
+            }
         }
+
+        else if (str[i] >= 97 && str[i] <= 122)
+        {
+            if (str[i] + 13 > 122)
+            {
+                str[i] = str[i] + 13 - 26;
+            }
+            else
+            {
+                str[i] = str[i] + 13;
+            }
+        }
+        std::cout << str[i];
     }
 
-    if (ret.size())
-    {
-        std::cout << ret << "\n";
-    }
-    else
-    {
-        std::cout << "PREDAJA" << "\n";
-    }
+    return 0;
 }
