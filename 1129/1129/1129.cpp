@@ -5,39 +5,41 @@
 #include <algorithm>
 #include <string>
 
-int main() 
+int main()
 {
-    std::string str;
+	int n; //파일의 개수
+	std::string search;
 
-    std::getline(std::cin, str);
-    for (int i = 0; i < str.size(); i++)
-    {
-        // 대문자
-        if (str[i] >= 65 && str[i] < 97)
-        {
-            if (str[i] + 13 > 90)
-            {
-                str[i] = str[i] + 13 - 26;
-            }
-            else
-            {
-                str[i] = str[i] + 13;
-            }
-        }
+	std::cin >> n;
+	std::cin >> search;
+	int pos = search.find('*');
 
-        else if (str[i] >= 97 && str[i] <= 122)
-        {
-            if (str[i] + 13 > 122)
-            {
-                str[i] = str[i] + 13 - 26;
-            }
-            else
-            {
-                str[i] = str[i] + 13;
-            }
-        }
-        std::cout << str[i];
-    }
+	std::string prefix = search.substr(0, pos);
+	std::string suffix = search.substr(pos + 1);
 
-    return 0;
+	std::string str;
+	for (int i = 0; i < n; i++)
+	{
+		std::cin >> str;
+
+		//비교 문자열이 주어진 문자열보다 클 때. 비교부터 안된다
+		if (prefix.size() + suffix.size() > str.size())
+		{
+			std::cout << "NE\n";
+		}
+		else
+		{
+			if (prefix == str.substr(0, prefix.size())
+				&& suffix == str.substr(str.size() - suffix.size()))
+			{
+				std::cout << "DA\n";
+			}
+			else
+			{
+				std::cout << "NE\n";
+			}
+		}
+
+	}
+	return 0;
 }
