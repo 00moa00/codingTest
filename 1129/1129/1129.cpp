@@ -5,58 +5,19 @@
 #include<algorithm>
 #include <vector>
 
-
 using namespace std;
-int a[9], sum;
-std::vector<int> v;
-pair<int, int> ret;
+string str;
+int cnt[26];
 
-void solve()
-{
-	for (int i = 0; i < 9; i++)
-	{
-		for (int j = 0; j < i; j++)
-		{
-			if (sum - a[i] - a[j] == 100)
-			{
-				ret = { i, j };
-				return;
-			}
-		}
+int main() {
+	cin >> str;
+	for (char a : str) {
+		cnt[a - 'a']++;
 	}
-}
+	for (int i = 0; i < 26; i++)
+	{
+		cout << cnt[i] << " ";
+	}
 
-void makePermutation(int n, int r, int depth) {
-	if (r == depth) {
-		solve();
-		return;
-	}
-	for (int i = depth; i < n; i++) 
-	{
-		swap(a[i], a[depth]);
-		makePermutation(n, r, depth + 1);
-		swap(a[i], a[depth]);
-	}
-	return;
-}
-
-int main() 
-{
-
-	for (int i = 0; i < 9; i++) {
-		cin >> a[i];
-		sum += a[i];
-	}
-	solve();
-	for (int i = 0; i < 9; i++) 
-	{
-		if (ret.first == i || ret.second == i) continue;
-		v.push_back(a[i]);
-	}
-	sort(v.begin(), v.end());
-	for (int i = 0; i < v.size(); i++)
-	{
-		cout << v[i] << " ";
-	}
 	return 0;
 }
