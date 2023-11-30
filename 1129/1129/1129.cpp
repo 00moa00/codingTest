@@ -3,30 +3,19 @@
 
 #include <iostream>
 
-using namespace std;
-int A, B, C, a, b, cnt[104], ret;
-
-int main() {
-	cin >> A >> B >> C; //주차요금
-	for (int i = 0; i < 3; i++) 
-	{
-		cin >> a >> b;	//도착, 떠난 시간. 이상 미만
-		for (int j = a; j < b; j++)
-		{
-			cnt[j]++;
-		}
-	}
-
-	for (int j = 1; j < 100; j++) 
-	{
-		//트럭이 도착했다면
-		if (cnt[j]) 
-		{
-			if (cnt[j] == 1) ret += A;
-			else if (cnt[j] == 2)ret += B * 2;
-			else if (cnt[j] == 3)ret += C * 3;
-		}
-	}
-	cout << ret << "\n";
-	return 0;
+std::string s, temp;
+int main() 
+{
+    std::cin >> s;
+    temp = s;
+    reverse(temp.begin(), temp.end());
+    if (temp == s)
+    {
+        std::cout << 1 << "\n";
+    }
+    else
+    {
+        std::cout << 0 << "\n";
+    }
+    return 0;
 }
