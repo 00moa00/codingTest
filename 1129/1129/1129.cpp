@@ -5,30 +5,38 @@
 
 int main()
 {
-	int n = 0;
-	int Result = 0;
+	int count = 0;			//과목수
 
+	std::cin >> count;
+	float* scorePtr = new float[count];
 
-	std::cin >> n;
-	int* nPtr = new int[n];
-
-	for (int i = 0; i < n; i++)
+	for (int i = 0; i < count; i++)
 	{
-		std::cin >> nPtr[i];
+		std::cin >> scorePtr[i];
 	}
-
-	int v = 0;
-	std::cin >> v;
-	int r = 0;
-
-	for (int i = 0; i < n; i++)
+	
+	float max = scorePtr[0];
+	float prevMax;
+	for (int i = 1; i < count; i++)
 	{
-		if (nPtr[i] == v)
+		if (scorePtr[i] > max)
 		{
-			r++;
+			max = scorePtr[i];
 		}
 	}
 
-	std::cout << r;
+	for (int i = 0; i < count; i++)
+	{
+		scorePtr[i] = (scorePtr[i] / max) * 100;
+	}
+
+	float TotalScore = 0.f;
+	for (int i = 0; i < count; i++)
+	{
+		TotalScore += scorePtr[i];
+	}
+
+	float result = TotalScore / count;
+	std::cout << result;
 }
 
