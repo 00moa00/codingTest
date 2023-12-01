@@ -8,40 +8,39 @@
 
 int main()
 {
-	std::ios_base::sync_with_stdio(false);
-	std::cin.tie(NULL); std::cout.tie(NULL);
+	int n; //해빈이가 가진 의상의 수
+    int t; //테스트 케이스
 
-	int n; // 도감에 수록되어있는 포켓몬 수
-	int m; // 맞춰야하는 포켓몬 수
+    std::string Clothes, Type;
+    std::cin >> t; 
 
-	std::string str;
-	std::map<std::string, int> SI_Map;
-	std::map<int, std::string> IS_Map;
+    while (t--) 
+    {
+        std::map<std::string, int> _map;
+        std::cin >> n;
 
+        //의상의 수만큼
+        for (int i = 0; i < n; i++) 
+        {
+            std::cin >> Clothes >> Type;
 
-	std::cin >> n >> m;
+            //해당 종류의 개수 추가
+            _map[Type]++;
+        }
 
-	for (int i = 0; i < n; i++)
-	{
-		std::cin >> str;
-		IS_Map[i + 1] = str;
-		SI_Map[str] = i + 1;
+        //경우의 수는 커질 수 있기 때문에 long long
+        long long ret = 1;
 
-	}
+        for (auto c : _map) 
+        {
+            //종류마다 아무것도 안입는 경우
+            ret *= ((long long)c.second + 1);
+        }
 
-	for (int i = 0; i < m; i++)
-	{
-		std::cin >> str;
+        //모든 종류의 옷을 아무것도 안입는 경우
+        ret--;
+        std::cout << ret << "\n";
+    }
 
-		//문자열에서 인트로 변환이 되지 않는다면
-		if (atoi(str.c_str()) == 0)
-		{
-			std::cout << SI_Map[str] << "\n";
-		}
-		else
-		{
-			std::cout << IS_Map[atoi(str.c_str())] << "\n";
-		}
-
-	}
+    return 0;
 }
