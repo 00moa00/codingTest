@@ -6,34 +6,32 @@
 #include <string>
 #include <vector>
 #include <stack>
-typedef long long ll;
-ll a, b, c;
-
-ll go(ll a, ll b) 
-{
-    if (b == 1)
-    {
-        return a % c;
-    }
-
-    ll ret = go(a, b / 2);
-    ret = (ret * ret) % c;
-    if (b % 2)
-    {
-        ret = (ret * a) % c;
-    }
-
-    return ret;
-}
 
 int main()
 {
-    std::ios_base::sync_with_stdio(false);
-    std::cin.tie(NULL);
-    std::cout.tie(NULL);
+	typedef long long ll;
+	int n;
 
-    std::cin >> a >> b >> c;
-    std::cout << go(a, b) << "\n";
+	//입력을 계속해서 받는다
+	while (scanf("%d", &n) != EOF) 
+	{
+		int cnt = 1, ret = 1;
+
+		while (true) 
+		{
+			if (cnt % n == 0) 
+			{
+				printf("%d\n", ret);
+				break;
+			}
+			else 
+			{
+				cnt = (cnt * 10) + 1;
+				cnt %= n;
+				ret++;
+			}
+		}
+	}
 
     return 0;
 }
