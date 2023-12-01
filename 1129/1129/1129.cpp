@@ -8,52 +8,32 @@
 
 int main()
 {
-    int cnt[26] = { 0, };      
-    std::string Keyword;
+	int TotalCount;				// 갑옷을 만드는데 필요한 수
+	int MatertialCount;			// 총 재료의 개수
+	int MatertialNumber[15001];	// 재료의 번호
 
-    std::string mid, front, back;
+	int Result = 0;
 
-    std::cin >> Keyword;
-    for (int i = 0; i < Keyword.size(); i++)
-    {
-        cnt[Keyword[i] - 'A'] ++;
-    }
 
-    int oddNumber = 0;
-    for (int i = 0; i < 26; i++)
-    {
-        if (cnt[i] == 0)
-        {
-            continue;
-        }
-        if (cnt[i] & 1)
-        {
-            mid += char(i+ 'A');
-            oddNumber++;
-        }
-    }
+	std::cin >> MatertialCount >> TotalCount;
 
-    if (oddNumber >= 2)
-    {
-        std::cout << "I'm Sorry Hansoo\n";
-    }
-    else
-    {
-        for (int i = 'A'; i <= 'Z'; i++)
-        {
-            if (cnt[i - 'A' ] > 1)
-            {
-                char temp = char(i);
-                for (int j = 0; j < cnt[i - 'A'] / 2; j++)
-                {
-                    front += temp;
-                }                
-            }           
-        }
+	for (int i = 0; i < MatertialCount; ++i)
+	{
+		std::cin >> MatertialNumber[i];
+	}
 
-        back = front;
-        std::reverse(back.begin(), back.end());
+	for (int i = 0; i < MatertialCount; ++i)
+	{
 
-        std::cout << front + mid + back;
-    }
+		for (int j = i + 1; j < MatertialCount; ++j)
+		{
+			if (MatertialNumber[i] + MatertialNumber[j] == TotalCount)
+			{
+				Result += 1;
+			}
+		}
+	}
+
+	std::cout << Result;
+
 }
