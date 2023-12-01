@@ -4,42 +4,44 @@
 #include <iostream>
 #include <algorithm>
 #include <string>
+#include <map>
 
 int main()
 {
-	int n; //파일의 개수
-	std::string search;
+	std::ios_base::sync_with_stdio(false);
+	std::cin.tie(NULL); std::cout.tie(NULL);
 
-	std::cin >> n;
-	std::cin >> search;
-	int pos = search.find('*');
-
-	std::string prefix = search.substr(0, pos);
-	std::string suffix = search.substr(pos + 1);
+	int n; // 도감에 수록되어있는 포켓몬 수
+	int m; // 맞춰야하는 포켓몬 수
 
 	std::string str;
+	std::map<std::string, int> SI_Map;
+	std::map<int, std::string> IS_Map;
+
+
+	std::cin >> n >> m;
+
 	for (int i = 0; i < n; i++)
 	{
 		std::cin >> str;
+		IS_Map[i + 1] = str;
+		SI_Map[str] = i + 1;
 
-		//비교 문자열이 주어진 문자열보다 클 때. 비교부터 안된다
-		if (prefix.size() + suffix.size() > str.size())
+	}
+
+	for (int i = 0; i < m; i++)
+	{
+		std::cin >> str;
+
+		//문자열에서 인트로 변환이 되지 않는다면
+		if (atoi(str.c_str()) == 0)
 		{
-			std::cout << "NE\n";
+			std::cout << SI_Map[str] << "\n";
 		}
 		else
 		{
-			if (prefix == str.substr(0, prefix.size())
-				&& suffix == str.substr(str.size() - suffix.size()))
-			{
-				std::cout << "DA\n";
-			}
-			else
-			{
-				std::cout << "NE\n";
-			}
+			std::cout << IS_Map[atoi(str.c_str())] << "\n";
 		}
 
 	}
-	return 0;
 }
