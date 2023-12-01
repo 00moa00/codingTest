@@ -8,39 +8,52 @@
 
 int main()
 {
-	int n; //해빈이가 가진 의상의 수
-    int t; //테스트 케이스
+    int cnt[26] = { 0, };      
+    std::string Keyword;
 
-    std::string Clothes, Type;
-    std::cin >> t; 
+    std::string mid, front, back;
 
-    while (t--) 
+    std::cin >> Keyword;
+    for (int i = 0; i < Keyword.size(); i++)
     {
-        std::map<std::string, int> _map;
-        std::cin >> n;
-
-        //의상의 수만큼
-        for (int i = 0; i < n; i++) 
-        {
-            std::cin >> Clothes >> Type;
-
-            //해당 종류의 개수 추가
-            _map[Type]++;
-        }
-
-        //경우의 수는 커질 수 있기 때문에 long long
-        long long ret = 1;
-
-        for (auto c : _map) 
-        {
-            //종류마다 아무것도 안입는 경우
-            ret *= ((long long)c.second + 1);
-        }
-
-        //모든 종류의 옷을 아무것도 안입는 경우
-        ret--;
-        std::cout << ret << "\n";
+        cnt[Keyword[i] - 'A'] ++;
     }
 
-    return 0;
+    int oddNumber = 0;
+    for (int i = 0; i < 26; i++)
+    {
+        if (cnt[i] == 0)
+        {
+            continue;
+        }
+        if (cnt[i] & 1)
+        {
+            mid += char(i+ 'A');
+            oddNumber++;
+        }
+    }
+
+    if (oddNumber >= 2)
+    {
+        std::cout << "I'm Sorry Hansoo\n";
+    }
+    else
+    {
+        for (int i = 'A'; i <= 'Z'; i++)
+        {
+            if (cnt[i - 'A' ] > 1)
+            {
+                char temp = char(i);
+                for (int j = 0; j < cnt[i - 'A'] / 2; j++)
+                {
+                    front += temp;
+                }                
+            }           
+        }
+
+        back = front;
+        std::reverse(back.begin(), back.end());
+
+        std::cout << front + mid + back;
+    }
 }
