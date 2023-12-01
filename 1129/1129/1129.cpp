@@ -5,35 +5,37 @@
 #include <algorithm>
 #include <string>
 #include <map>
+#include <stack>
 
 int main()
 {
-	int TotalCount;				// 갑옷을 만드는데 필요한 수
-	int MatertialCount;			// 총 재료의 개수
-	int MatertialNumber[15001];	// 재료의 번호
+	int keywordCount, result;
+	std::string str;
+	std::cin >> keywordCount;
 
-	int Result = 0;
-
-
-	std::cin >> MatertialCount >> TotalCount;
-
-	for (int i = 0; i < MatertialCount; ++i)
+	for (int i = 0; i < keywordCount; i++)
 	{
-		std::cin >> MatertialNumber[i];
-	}
+		std::cin >> str;
+		std::stack<char> stk;
 
-	for (int i = 0; i < MatertialCount; ++i)
-	{
-
-		for (int j = i + 1; j < MatertialCount; ++j)
+		for (char a : str)
 		{
-			if (MatertialNumber[i] + MatertialNumber[j] == TotalCount)
+			if (stk.size() && stk.top() == a)
 			{
-				Result += 1;
+				stk.pop();
 			}
+			else
+			{
+				stk.push(a);
+			}
+		}
+		if (stk.size() == 0)
+		{
+			result++;
 		}
 	}
 
-	std::cout << Result;
+	std::cout << result << "\n";
 
+	return 0;
 }
