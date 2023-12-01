@@ -7,35 +7,27 @@
 #include <map>
 #include <stack>
 
+//구간합
 int main()
 {
-	int keywordCount, result;
-	std::string str;
-	std::cin >> keywordCount;
+	std::ios_base::sync_with_stdio(false);
+	std::cin.tie(NULL); std::cout.tie(NULL);
 
-	for (int i = 0; i < keywordCount; i++)
+	int n = 0, k = 0, temp = 0, result = -1000000;
+	int psum[100001] = {0,};
+
+	std::cin >> n >> k;
+	for (int i = 1; i <= n; i++)
 	{
-		std::cin >> str;
-		std::stack<char> stk;
+		std::cin >> temp; 
+		psum[i] = psum[i - 1] + temp;
+	}
 
-		for (char a : str)
-		{
-			if (stk.size() && stk.top() == a)
-			{
-				stk.pop();
-			}
-			else
-			{
-				stk.push(a);
-			}
-		}
-		if (stk.size() == 0)
-		{
-			result++;
-		}
+	for (int i = k; i <= n; i++) 
+	{
+		result = std::max(result, psum[i] - psum[i - k]);
 	}
 
 	std::cout << result << "\n";
-
 	return 0;
 }
