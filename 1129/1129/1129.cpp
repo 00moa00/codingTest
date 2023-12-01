@@ -4,30 +4,38 @@
 #include <iostream>
 #include <algorithm>
 #include <string>
-#include <map>
+#include <vector>
 #include <stack>
 
-//구간합
 int main()
 {
-	std::ios_base::sync_with_stdio(false);
-	std::cin.tie(NULL); std::cout.tie(NULL);
+	int n;
+	int Paper[100][100] = {0,};
+	int count = 0;
 
-	int n = 0, k = 0, temp = 0, result = -1000000;
-	int psum[100001] = {0,};
+	std::cin >> n;
 
-	std::cin >> n >> k;
-	for (int i = 1; i <= n; i++)
+	for (int i = 0; i < n; i++)
 	{
-		std::cin >> temp; 
-		psum[i] = psum[i - 1] + temp;
+		int cmdX, cmdY;
+		std::cin >> cmdX >> cmdY;
+
+
+		for (int a = cmdX; a < cmdX + 10; a++)
+		{
+			for (int b = cmdY; b < cmdY + 10; b++)
+			{
+				// 기존에 마킹된 부분인지 확인
+				if (Paper[a][b] == 0)
+				{
+					Paper[a][b] = 1;
+					count += 1;
+				}
+			}
+		}
 	}
 
-	for (int i = k; i <= n; i++) 
-	{
-		result = std::max(result, psum[i] - psum[i - k]);
-	}
+	std::cout << count;
 
-	std::cout << result << "\n";
 	return 0;
 }
