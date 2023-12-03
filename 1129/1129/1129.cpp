@@ -11,64 +11,65 @@
 
 using namespace std;
 
-int dy[4] = { -1, 0, 1, 0 };
-int dx[4] = { 0, 1, 0, -1 };
-int m, n, k, y, x, ret, ny, nx, t;
-int a[51][51];
-bool visited[51][51];
+int a[101][101], e[101][101], visited[101][101], n, temp, ret = 1;
+int dy[4] = { -1, 0, 1, 0 }, dx[4] = { 0, 1, 0, -1 };
 
-//connected componenet
-
-void dfs(int y, int x) 
+void dfs(int y, int x, int d) 
 {
     visited[y][x] = 1;
     for (int i = 0; i < 4; i++) 
     {
-        ny = y + dy[i];
-        nx = x + dx[i];
+        int ny = y + dy[i];
+        int nx = x + dx[i];
 
-        if (ny < 0 || nx < 0 || ny >= n || nx >= m) continue;
+        if (ny < 0 || nx < 0 || ny >= n || nx >= n) continue;
 
-        if (a[ny][nx] == 1 && !visited[ny][nx]) 
+        if (!visited[ny][nx] && a[ny][nx] > d)
         {
-            dfs(ny, nx);
+             dfs(ny, nx, d);
         }
     }
+
     return;
 }
 
 int main() {
 
+    ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    cin >> t;
-    while (t--)
+    cin >> n;
+
+    for (int i = 0; i < n; i++) 
     {
-        fill(&a[0][0], &a[0][0] + 51 * 51, 0);
-        fill(&visited[0][0], &visited[0][0] + 51 * 51, 0);
-
-        ret = 0;
-        cin >> m >> n >> k;
-
-        for (int i = 0; i < k; i++) 
+        for (int j = 0; j < n; j++) 
         {
-            cin >> x >> y;
-            a[y][x] = 1;
+            cin >> a[i][j];
         }
+    }
+
+    for (int d = 1; d < 101; d++) 
+    {
+        fill(&visited[0][0], &visited[0][0] + 101 * 101, 0);
+
+        int cnt = 0;
 
         for (int i = 0; i < n; i++) 
         {
-            for (int j = 0; j < m; j++)
+            for (int j = 0; j < n; j++)
             {
-                if (a[i][j] == 1 && !visited[i][j])
+                if (a[i][j] > d && !visited[i][j]) 
                 {
-                    dfs(i, j);
-                    ret++;
+                    dfs(i, j, d);
+                    cnt++;
                 }
             }
         }
-        cout << ret << "\n";
+
+        ret = max(ret, cnt);
     }
+
+    cout << ret << '\n';
     return 0;
 
 }
