@@ -10,51 +10,47 @@
 #include <tuple>
 
 using namespace std;
-typedef long long int ll;
-int n;
-string s;
-char a[101][101];
 
-string quard(int y, int x, int size)
-{
-    
-    if (size == 1) return string(1, a[y][x]);
+int n, m, j, temp, l, r,ret = 0;
 
-    char b = a[y][x];
-    string ret = "";
-    for (int i = y; i < y + size; i++) 
-    {
-        for (int j = x; j < x + size; j++) 
-        {
-            if (b != a[i][j])
-            {
-                ret += '(';
-                ret += quard(y, x, size / 2);     //왼쪽 위
-                ret += quard(y, x + size / 2, size / 2);            //오른쪽 위
-                ret += quard(y + size / 2, x, size / 2);            //왼쪽 아래
-                ret += quard(y + size / 2, x + size / 2, size / 2); //오른쪽 아래
-                ret += ')';
 
-                return ret;
-            }
-        }
-    }
-    return string(1, a[y][x]);
-}
+
 int main() 
 {
     ios_base::sync_with_stdio(0); cin.tie(NULL);
-    cin >> n;
+    cin >> n >> m >> j;
+    l = 1;
 
-    for (int i = 0; i < n; i++) 
+    for (int i = 0; i <= j; i++)
     {
-        cin >> s;
+        //콜리전 생각하면 된다
+        r = l + m - 1;
+        cin >> temp;
 
-        for (int j = 0; j < n; j++) 
+        //범위체크
+        if (temp >= l && temp <= r)
         {
-            a[i][j] = s[j];
+            continue;
+        }
+        
+        else 
+        {
+            //temp가 left보다 왼쪽에 있다. 
+            if (temp < l) 
+            {
+                ret += (l - temp);
+                l = temp;
+            }
+
+            //temp가 right보다 오른쪽에 있다. 
+            else
+            {
+                l += (temp - r);
+                ret += (temp - r);
+            }
         }
     }
-    cout << quard(0, 0, n) << '\n';
+
+    cout << ret << "\n";
     return 0;
 }
