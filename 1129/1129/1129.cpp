@@ -11,23 +11,24 @@
 
 using namespace std;
 
-int a[101][101], e[101][101], visited[101][101], n, temp, ret = 1;
+int a[101][101], e[101][101], visited[101][101], n, m, k, temp, inputLX, inputLY, inputRX, inputRY;
 int dy[4] = { -1, 0, 1, 0 }, dx[4] = { 0, 1, 0, -1 };
+vector<int> ret;
 
-void dfs(int y, int x, int d) 
+void dfs(int y, int x) 
 {
     visited[y][x] = 1;
+    ret.back() += 1;
+
     for (int i = 0; i < 4; i++) 
     {
         int ny = y + dy[i];
         int nx = x + dx[i];
 
-        if (ny < 0 || nx < 0 || ny >= n || nx >= n) continue;
+        if (ny < 0 || ny >= m || nx < 0 || nx >= n || visited[ny][nx] == 1) continue;
+        if (a[ny][nx] == 1) continue;
 
-        if (!visited[ny][nx] && a[ny][nx] > d)
-        {
-             dfs(ny, nx, d);
-        }
+        dfs(ny, nx);
     }
 
     return;
@@ -38,38 +39,41 @@ int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     cout.tie(NULL);
-    cin >> n;
+    cin >> m >> n >> k;
 
-    for (int i = 0; i < n; i++) 
+    for (int i = 0; i < k; i++)
+    {
+        cin >> inputLX >> inputLY >> inputRX >> inputRY;
+
+        for (int x = inputLX; x < inputRX; x++)
+        {
+            for (int y = inputLY; y < inputRY; y++)
+            {
+                a[y][x] = 1;
+            }
+        }
+    }
+
+
+    for (int i = 0; i < m; i++) 
     {
         for (int j = 0; j < n; j++) 
         {
-            cin >> a[i][j];
-        }
-    }
-
-    for (int d = 1; d < 101; d++) 
-    {
-        fill(&visited[0][0], &visited[0][0] + 101 * 101, 0);
-
-        int cnt = 0;
-
-        for (int i = 0; i < n; i++) 
-        {
-            for (int j = 0; j < n; j++)
+            if (a[i][j] != 1 && visited[i][j] == 0)
             {
-                if (a[i][j] > d && !visited[i][j]) 
-                {
-                    dfs(i, j, d);
-                    cnt++;
-                }
+                ret.push_back(0);
+                dfs(i, j);
             }
         }
-
-        ret = max(ret, cnt);
     }
 
-    cout << ret << '\n';
+    cout<< ret.size() << '\n';
+    sort(ret.begin(), ret.end());
+
+    for (int i = 0; i < ret.size(); i++)
+    {
+        cout << ret[i] << ' ';
+    }
     return 0;
 
 }
