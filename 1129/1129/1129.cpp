@@ -3,107 +3,89 @@
 #include <algorithm>
 //#include <string>
 #include <vector>
-#include <map>
-#include <unordered_map>
+#include <string>
+
+//#include <map>
+//#include <unordered_map>
 //#include <stack>
 //#include <queue>
 //#include <tuple>
-#include <cctype>
+//#include <cctype>
 
 using namespace std;
 
-int vcnt;   //모음
-int ccnt;   //자음
-bool v = false;     //모음 들어갔는지 체크
+int n;
+vector<string> Nember;
 
-bool ret = true;
-
-string InputStr;
-
-
-bool vCheck(char str)
+bool cmp(string a, string b) 
 {
-    if (str == 'a' || str == 'e' || str == 'i' || str == 'o' || str == 'u')
-    {
-        return true;
-    }
-    else
-    {
-        return false;
-    }
+    if (a.size() == b.size()) return a < b;
+    return a.size() < b.size();
 }
+
+string processNumber(const string& numText)
+{
+    // 맨 앞의 숫자가 0이면서 0이 여러 개인 경우 처리
+    int cnt = 0;
+    while (cnt < numText.size() && numText[cnt] == '0')
+    {
+        cnt++;
+    }
+
+    string result = numText.substr(cnt);
+
+    if (result.empty())
+    {
+        result = "0"; // 숫자가 모두 0인 경우
+    }
+
+    return result;
+}
+
 
 int main() 
 {
-    ios_base::sync_with_stdio(0); cin.tie(NULL);
+    cin >> n;
 
-    while (true)
+    for (int i = 0; i < n; i++)
     {
-        cin >> InputStr;
-        if (InputStr == "end")
-        {
-            break;
-        }
+        string InputText = "";
+        string NumText = "";
 
-        //초기화
-        vcnt = 0;
-        ccnt = 0;
-        ret = true;
-        v = false;
+        cin >> InputText;
 
-        for (int i = 0; i < InputStr.size(); i++)
+        for (int j = 0; j < InputText.size(); j++)
         {
-            //소문자로 바꿔주는 함수
-            if (vCheck(tolower(InputStr[i])))
+            //숫자만 넣기
+            if (isdigit(InputText[j]))
             {
-                v = true;
-                ccnt = 0;
-                vcnt += 1;
-
+                NumText += InputText[j];
             }
+
+            //숫자가 아니라면 그동안 저장한 것들 넣기
             else
             {
-                vcnt = 0;
-                ccnt += 1;
-            }
-
-            //모음 혹은 자음이 연속 3번으로 들어오면 false
-            if (ccnt >= 3 || vcnt >= 3)
-            {
-                ret = false;
-                break;
-            }
-
-            //3. 연속된 같은 문자열 체크
-            if (i > 0 && InputStr[i] == InputStr[i - 1])
-            {
-                string checkStr3 = (i > 1) ? string(1, InputStr[i - 2]) : " ";
-                string check = string(1, InputStr[i]) + InputStr[i - 1] + checkStr3;
-
-                if (check.find("ee") != std::string::npos || check.find("oo") != std::string::npos)
+                if (!NumText.empty())
                 {
-                    if (check == ("eee") || check == ("ooo"))
-                    {
-                        ret = false;
-                        break;
-                    }
-
-                    continue;
+                    Nember.push_back(processNumber(NumText));
+                    NumText.clear();
                 }
-
-                ret = false;
-                break;
             }
         }
 
-        if (ret == false || v == false)
+        // 입력 문자열이 숫자로 끝나는 경우(else문에 들어가지 않으니까)에 대한 처리
+        if (!NumText.empty())
         {
-            cout << "<" << InputStr << ">" << " is not acceptable.\n";
+            Nember.push_back(processNumber(NumText));
+            NumText.clear();
         }
-        else
-        {
-            cout << "<" << InputStr << ">" << " is acceptable.\n";
-        }
+    }
+
+    std::sort(Nember.begin(), Nember.end(), cmp);
+
+    for (const auto& n : Nember)
+    {
+        cout << n << '\n';
     }
 
     return 0;
