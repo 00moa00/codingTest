@@ -13,80 +13,73 @@
 //#include <cctype>
 
 using namespace std;
-
 int n;
-vector<string> Nember;
+vector<string> v;
+string s, ret;
 
-bool cmp(string a, string b) 
+void go() 
 {
-    if (a.size() == b.size()) return a < b;
-    return a.size() < b.size();
+	while (true) 
+	{
+		//앞에 0이면 삭제
+		if (ret.size() && ret.front() == '0')
+		{
+			ret.erase(ret.begin());
+		}
+		else
+		{
+			break;
+		}
+	}
+
+	if (ret.size() == 0)
+	{
+		ret = "0";
+	}
+
+	v.push_back(ret);
+	ret = "";
 }
 
-string processNumber(const string& numText)
+bool cmp(string a, string b)
 {
-    // 맨 앞의 숫자가 0이면서 0이 여러 개인 경우 처리
-    int cnt = 0;
-    while (cnt < numText.size() && numText[cnt] == '0')
-    {
-        cnt++;
-    }
-
-    string result = numText.substr(cnt);
-
-    if (result.empty())
-    {
-        result = "0"; // 숫자가 모두 0인 경우
-    }
-
-    return result;
+	if (a.size() == b.size())
+	{
+		return a < b;
+	}
+	return a.size() < b.size();
 }
 
-
-int main() 
+int main()
 {
-    cin >> n;
+	cin >> n;
 
-    for (int i = 0; i < n; i++)
-    {
-        string InputText = "";
-        string NumText = "";
+	for (int i = 0; i < n; i++)
+	{
+		cin >> s;
+		ret = "";
+		for (int j = 0; j < s.size(); j++)
+		{
+			if (s[j] < 65)
+			{
+				ret += s[j];
+			}
 
-        cin >> InputText;
+			//숫자가 더이상 없으면
+			else if (ret.size())
+			{
+				go();
+			}
+		}
 
-        for (int j = 0; j < InputText.size(); j++)
-        {
-            //숫자만 넣기
-            if (isdigit(InputText[j]))
-            {
-                NumText += InputText[j];
-            }
+		//숫자로 끝나면 (else if문에 들어가지 않음)
+		if (ret.size())
+		{
+			go();
+		}
+	}
+	sort(v.begin(), v.end(), cmp);
 
-            //숫자가 아니라면 그동안 저장한 것들 넣기
-            else
-            {
-                if (!NumText.empty())
-                {
-                    Nember.push_back(processNumber(NumText));
-                    NumText.clear();
-                }
-            }
-        }
-
-        // 입력 문자열이 숫자로 끝나는 경우(else문에 들어가지 않으니까)에 대한 처리
-        if (!NumText.empty())
-        {
-            Nember.push_back(processNumber(NumText));
-            NumText.clear();
-        }
-    }
-
-    std::sort(Nember.begin(), Nember.end(), cmp);
-
-    for (const auto& n : Nember)
-    {
-        cout << n << '\n';
-    }
-
-    return 0;
+	for (string i : v)cout << i << "\n";
+	return 0;
 }
