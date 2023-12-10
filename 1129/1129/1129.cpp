@@ -13,73 +13,57 @@
 //#include <cctype>
 
 using namespace std;
-int n;
-vector<string> v;
-string s, ret;
 
-void go() 
-{
-	while (true) 
-	{
-		//앞에 0이면 삭제
-		if (ret.size() && ret.front() == '0')
-		{
-			ret.erase(ret.begin());
-		}
-		else
-		{
-			break;
-		}
-	}
 
-	if (ret.size() == 0)
-	{
-		ret = "0";
-	}
+int n, m; 
+string s;
+int a[104][104];
 
-	v.push_back(ret);
-	ret = "";
-}
-
-bool cmp(string a, string b)
-{
-	if (a.size() == b.size())
-	{
-		return a < b;
-	}
-	return a.size() < b.size();
-}
 
 int main()
 {
-	cin >> n;
+	cin >> n >> m; //n :y, m:x
+	for (int i = 0; i < n; i++) {
+		cin >> s;
+
+		for (int j = 0; j < m; j++) {
+			if (s[j] == '.')
+			{
+				//구름이 없당
+				a[i][j] = -1;
+			}
+			else
+			{
+				//구름이 있었당
+				a[i][j] = 0;
+			}
+		}
+	}
+
+	//구름을 이동시킨다
+	for (int i = 0; i < n; i++) 
+	{
+		for (int j = 0; j < m; j++) 
+		{
+			if (a[i][j] == 0) 
+			{
+				int cnt = 1;
+				while (a[i][j + 1] == -1) 
+				{
+					a[i][j + 1] = cnt++;
+					j++;
+				}
+			}
+		}
+	}
 
 	for (int i = 0; i < n; i++)
 	{
-		cin >> s;
-		ret = "";
-		for (int j = 0; j < s.size(); j++)
+		for (int j = 0; j < m; j++)
 		{
-			if (s[j] < 65)
-			{
-				ret += s[j];
-			}
-
-			//숫자가 더이상 없으면
-			else if (ret.size())
-			{
-				go();
-			}
+			cout << a[i][j] << " ";
 		}
-
-		//숫자로 끝나면 (else if문에 들어가지 않음)
-		if (ret.size())
-		{
-			go();
-		}
+		cout << "\n";
 	}
-	sort(v.begin(), v.end(), cmp);
-
-	for (string i : v)cout << i << "\n";
 	return 0;
 }
