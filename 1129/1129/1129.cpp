@@ -14,56 +14,32 @@
 
 using namespace std;
 
+//typedef unsigned long long ll;
+int n, a;
 
-int n, m; 
-string s;
-int a[104][104];
-
-
-int main()
+int main() 
 {
-	cin >> n >> m; //n :y, m:x
-	for (int i = 0; i < n; i++) {
-		cin >> s;
+	ios_base::sync_with_stdio(false); cin.tie(NULL); cout.tie(NULL);
 
-		for (int j = 0; j < m; j++) {
-			if (s[j] == '.')
-			{
-				//구름이 없당
-				a[i][j] = -1;
-			}
-			else
-			{
-				//구름이 있었당
-				a[i][j] = 0;
-			}
-		}
-	}
-
-	//구름을 이동시킨다
+	cin >> n;
 	for (int i = 0; i < n; i++) 
 	{
-		for (int j = 0; j < m; j++) 
+		cin >> a;
+		int ret2 = 0, ret5 = 0;
+
+		for (int j = 2; j <= a; j *= 2) 
 		{
-			if (a[i][j] == 0) 
-			{
-				int cnt = 1;
-				while (a[i][j + 1] == -1) 
-				{
-					a[i][j + 1] = cnt++;
-					j++;
-				}
-			}
+			ret2 += a / j;
 		}
+
+		for (int j = 5; j <= a; j *= 5) 
+		{
+			ret5 += a / j;
+		}
+
+		cout << min(ret2, ret5) << "\n";
+
 	}
 
-	for (int i = 0; i < n; i++)
-	{
-		for (int j = 0; j < m; j++)
-		{
-			cout << a[i][j] << " ";
-		}
-		cout << "\n";
-	}
 	return 0;
 }
