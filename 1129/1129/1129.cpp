@@ -16,31 +16,9 @@
 using namespace std;
 
 //typedef unsigned long long ll;
-int n; //골이 들어간 횟수
-int InputTeamNum;
-string InputTime;
+int n; 
 
-string PrevTime = "00:00";
 
-int ATaemTime;
-int BTaemTime;
-
-int ATeamScore;
-int BTeamScore;
-
-string ChangeToString(int a) 
-{
-	string d = "00" + to_string(a / 60);
-	string e = "00" + to_string(a % 60);
-
-	//뒤에서 두번째부터 자른다.
-	return d.substr(d.size() - 2, 2) + ":" + e.substr(e.size() - 2, 2);
-}
-
-int ChangeToInt(string a)
-{
-	return stoi(a.substr(0, 2).c_str()) * 60 + stoi(a.substr(3, 2).c_str());
-}
 
 int main() 
 {
@@ -48,46 +26,22 @@ int main()
 
 	cin >> n;
 
-	for (int i = 0; i < n; i++)
+	int cnt = 666;
+	while (true)
 	{
-		cin >> InputTeamNum >> InputTime;
-
-		if (ATeamScore > BTeamScore)
+		if (to_string(cnt).find("666") != string::npos)
 		{
-			ATaemTime += (ChangeToInt(InputTime) - ChangeToInt(PrevTime));
-		}
-		else if (ATeamScore < BTeamScore)
-		{
-			BTaemTime += (ChangeToInt(InputTime) - ChangeToInt(PrevTime));
+			n--;
 		}
 
-		//점수 넣어준다.
-		if (InputTeamNum == 1)
+		if (n == 0)
 		{
-			ATeamScore += 1;
-		}
-		else
-		{
-			BTeamScore += 1;
+			break;
 		}
 
-		PrevTime = InputTime;
-	
+		cnt++;
 	}
 
-	int lastGameTime = ChangeToInt("48:00");
-
-	if (ATeamScore > BTeamScore)
-	{
-		ATaemTime += lastGameTime - ChangeToInt(PrevTime);
-	}
-	else if (ATeamScore < BTeamScore)
-	{
-		BTaemTime += lastGameTime - ChangeToInt(PrevTime);
-	}
-
-	cout << ChangeToString(ATaemTime) << "\n";
-	cout << ChangeToString(BTaemTime) << "\n";
-
+	cout << cnt << endl;
 	return 0;
 }
