@@ -68,7 +68,3 @@ long long solution(int cap, int n, vector<int> deliveries, vector<int> pickups)
     return answer;
 }
 
-int main()
-{
-    std::cout << "Hello World!\n";
-}
