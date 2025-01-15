@@ -66,76 +66,76 @@ void breeding(int y, int x)
 }
 
 
-int main()
-{
-    cin >> n >> m >> k;
-
-    a.resize(n, vector<Soil>(n));
-    winterEnergy.resize(n, vector<int>(n));
-
-    for (int i = 0; i < n; ++i)
-    {
-        for (int j = 0; j < n; ++j)
-        {
-            cin >> winterEnergy[i][j];
-            a[i][j].energy = 5; // 초기 양분은 5
-        }
-    }
-
-    for (int i = 0; i < m; ++i)
-    {
-        int x, y, z;
-        cin >> y >> x >> z;
-        a[y - 1][x - 1].tree.push_back(z); // 나무 추가
-    }
-
-    while (k--)
-    {
-        // 봄: 나무 성장
-        for (int i = 0; i < n; ++i)
-        {
-            for (int j = 0; j < n; ++j)
-            {
-                a[i][j].grow();
-            }
-        }
-
-        // 가을: 번식
-        for (int i = 0; i < n; ++i)
-        {
-            for (int j = 0; j < n; ++j)
-            {
-                for (int t : a[i][j].tree)
-                {
-                    if (t % 5 == 0) // 5의 배수인 경우 번식
-                    {
-                        breeding(i, j);
-                    }
-                }
-            }
-        }
-
-        // 겨울: 양분 추가
-        for (int i = 0; i < n; ++i)
-        {
-            for (int j = 0; j < n; ++j)
-            {
-                a[i][j].energy += winterEnergy[i][j];
-            }
-        }
-    }
-
-    // 결과 출력
-    int result = 0;
-
-    for (int i = 0; i < n; ++i)
-    {
-        for (int j = 0; j < n; ++j)
-        {
-            result += a[i][j].tree.size();
-        }
-    }
-
-    cout << result << endl;
-    return 0;
-}
+//int main()
+//{
+//    cin >> n >> m >> k;
+//
+//    a.resize(n, vector<Soil>(n));
+//    winterEnergy.resize(n, vector<int>(n));
+//
+//    for (int i = 0; i < n; ++i)
+//    {
+//        for (int j = 0; j < n; ++j)
+//        {
+//            cin >> winterEnergy[i][j];
+//            a[i][j].energy = 5; // 초기 양분은 5
+//        }
+//    }
+//
+//    for (int i = 0; i < m; ++i)
+//    {
+//        int x, y, z;
+//        cin >> y >> x >> z;
+//        a[y - 1][x - 1].tree.push_back(z); // 나무 추가
+//    }
+//
+//    while (k--)
+//    {
+//        // 봄: 나무 성장
+//        for (int i = 0; i < n; ++i)
+//        {
+//            for (int j = 0; j < n; ++j)
+//            {
+//                a[i][j].grow();
+//            }
+//        }
+//
+//        // 가을: 번식
+//        for (int i = 0; i < n; ++i)
+//        {
+//            for (int j = 0; j < n; ++j)
+//            {
+//                for (int t : a[i][j].tree)
+//                {
+//                    if (t % 5 == 0) // 5의 배수인 경우 번식
+//                    {
+//                        breeding(i, j);
+//                    }
+//                }
+//            }
+//        }
+//
+//        // 겨울: 양분 추가
+//        for (int i = 0; i < n; ++i)
+//        {
+//            for (int j = 0; j < n; ++j)
+//            {
+//                a[i][j].energy += winterEnergy[i][j];
+//            }
+//        }
+//    }
+//
+//    // 결과 출력
+//    int result = 0;
+//
+//    for (int i = 0; i < n; ++i)
+//    {
+//        for (int j = 0; j < n; ++j)
+//        {
+//            result += a[i][j].tree.size();
+//        }
+//    }
+//
+//    cout << result << endl;
+//    return 0;
+//}
