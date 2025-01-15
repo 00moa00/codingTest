@@ -62,9 +62,9 @@ vector<int> solution(int rows, int columns, vector<vector<int>> queries)
     return answer;
 }
 
-
-int main()
-{
-    solution(6, 6, { {2, 2, 5, 4},{3, 3, 6, 6},{5, 1, 6, 3} });
-        
-}
+//
+//int main()
+//{
+//    solution(6, 6, { {2, 2, 5, 4},{3, 3, 6, 6},{5, 1, 6, 3} });
+//        
+//}
