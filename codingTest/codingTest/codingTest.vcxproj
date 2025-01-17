@@ -133,6 +133,8 @@
     <ClCompile Include="2589.cpp" />
     <ClCompile Include="77485.cpp" />
     <ClCompile Include="codingTest.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="solution.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
