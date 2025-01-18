@@ -1,11 +1,8 @@
 ﻿#include <vector>
-#include <iostream>
-#include <chrono> // 시간 측정 라이브러리
+#include <cstring> // memset 사용을 위해 추가
 
 using namespace std;
 
-vector<vector<int>> board;
-using namespace chrono; // 편리성을 위해 chrono 네임스페이스 사용
 
 // 테스트용 함수
 const int MAX_H = 201; // 최대 높이
@@ -13,11 +10,12 @@ const int MAX_W = 201; // 최대 폭
 
 
 //검사용 변수
-vector<pair<int, int>> p1Comboblocks;
-vector<pair<int, int>> p2Comboblocks;
+//vector<pair<int, int>> p1Comboblocks;
+//vector<pair<int, int>> p2Comboblocks;
 
-vector<vector<int>> visited;
-vector<vector<int>> removeBlock;
+int board[MAX_H][MAX_W];
+int visited[MAX_H][MAX_W];
+int removeBlock[MAX_H][MAX_W];
 
 int wSize = 0;
 int hSize = 0;
@@ -30,6 +28,14 @@ int p2Score = 0;
 int dy[4] = { -1, 0, 1, 0 };
 int dx[4] = { 0, 1, 0, -1 };
 
+// 네 방향 탐색
+const int directions[4][2] =
+{
+    {1, 0},  // 아래쪽
+    {0, 1},  // 오른쪽
+    {1, 1},  // 오른쪽 아래 대각선
+    {1, -1}  // 왼쪽 아래 대각선
+};
 
 
 
@@ -43,10 +49,15 @@ void init(int W, int H)
     wSize = W;
     hSize = H;
 
-    board = vector<vector<int>>(H, vector<int>(W, 0));
-    visited = vector<vector<int>>(H, vector<int>(W, 0));
-    removeBlock = vector<vector<int>>(H, vector<int>(W, 0));
-
+    for (int i = 0; i < hSize; ++i) 
+    {
+        for (int j = 0; j < wSize; ++j)
+        {
+            board[i][j] = 0;
+            visited[i][j] = 0;
+            removeBlock[i][j] = 0;
+        }
+    }
     // visited 벡터의 용량을 미리 예약
     //for (int i = 0; i < hSize; ++i)
     //{
@@ -179,16 +190,8 @@ void dfsRemove(int y, int x, int dx, int dy, int player, vector<pair<int, int>>&
     dfsRemove(y + dy, x + dx, dx, dy, player, comboblocks);
 }
 
-// 네 방향 탐색
-const int directions[4][2] =
-{
-    {1, 0},  // 아래쪽
-    {0, 1},  // 오른쪽
-    {1, 1},  // 오른쪽 아래 대각선
-    {1, -1}  // 왼쪽 아래 대각선
-};
 
-void removeBlocks(vector<vector<int>>& removeBlock, int player, int opponent, bool& bIsremove)
+void removeBlocks(int player, int opponent, bool& bIsremove)
 {
     vector<pair<int, int>> comboblocks;
     comboblocks.reserve(20);
@@ -233,7 +236,7 @@ int getScore(int mPlayer, int mOpponent)
         hasRemoved = false;
 
 
-        removeBlocks(removeBlock, mPlayer, mOpponent, hasRemoved);
+        removeBlocks( mPlayer, mOpponent, hasRemoved);
         //removeBlocks(removeBlock, -1, 1, mPlayer, mOpponent); // 왼쪽 아래
         //removeBlocks(removeBlock, -1, -1, mPlayer, mOpponent); // 왼쪽 위
         //removeBlocks(removeBlock, 1, -1, mPlayer, mOpponent); // 오른쪽 위
@@ -274,7 +277,7 @@ int getScore(int mPlayer, int mOpponent)
         applyGravity();
 
         // removeBlock 배열을 초기화
-        fill(removeBlock.begin(), removeBlock.end(), vector<int>(wSize, 0));
+        memset(removeBlock, 0, sizeof(removeBlock));
 
     }
 
@@ -361,7 +364,9 @@ void dfs(int y, int x, int opponentPlayer, int player)
 int changeBlocks(int mPlayer, int mCol)
 {
 
-    fill(visited.begin(), visited.end(), vector<int>(wSize, 0));
+    //fill(visited.begin(), visited.end(), vector<int>(wSize, 0));
+
+    memset(visited, 0, sizeof(visited));
 
     int opponent = (mPlayer == 1) ? 2 : 1;
 
