@@ -35,6 +35,14 @@ void init(int W, int H)
     hSize = H;
 
     board = vector<vector<int>>(H, vector<int>(W, 0));
+   // visited = vector<vector<int>>(H, vector<int>(W, 0));
+
+    // visited 벡터의 용량을 미리 예약
+    for (int i = 0; i < hSize; ++i)
+    {
+        visited[i].reserve(wSize);
+    }
+
 
     p1Score = 0;
     p2Score = 0;
@@ -73,6 +81,14 @@ void removeBlocks(vector<vector<int>>& removeBlock, int dx, int dy, int player, 
     {
         for (int j = 0; j < wSize; ++j)
         {
+
+            //if (removeBlock[i][j] != 0)
+            //{
+            //    // 이미 처리된 블록은 건너뜁니다.
+            //    continue;
+            //}
+
+
             p1Comboblocks.clear();
 
             for (int k = 0;; ++k)
@@ -154,7 +170,10 @@ int getScore(int mPlayer, int mOpponent)
     {
         vector<vector<int>> removeBlock(hSize, vector<int>(wSize, 0));
 
-        removeBlocks(removeBlock, 1, 1, mPlayer, mOpponent);
+        removeBlocks(removeBlock, 1, 1, mPlayer, mOpponent);  // 오른쪽 아래
+        removeBlocks(removeBlock, -1, 1, mPlayer, mOpponent); // 왼쪽 아래
+        removeBlocks(removeBlock, -1, -1, mPlayer, mOpponent); // 왼쪽 위
+        removeBlocks(removeBlock, 1, -1, mPlayer, mOpponent); // 오른쪽 위
         removeBlocks(removeBlock, 0, 1, mPlayer, mOpponent);
         removeBlocks(removeBlock, 1, 0, mPlayer, mOpponent);
 
@@ -195,14 +214,17 @@ int getScore(int mPlayer, int mOpponent)
     {
         p2Score += ret;
     }
-    cout << "삭제후----------------------" << endl;
-    for (int i = 0; i < hSize; ++i) {
-        for (int j = 0; j < wSize; ++j) {
-            cout << board[i][j] << " ";
-        }
-        cout << endl;
-    }
-    cout << "----------------------" << endl;
+    //cout << "삭제후----------------------" << endl;
+    //for (int i = 0; i < hSize; ++i) 
+    //{
+    //    for (int j = 0; j < wSize; ++j)
+    //    {
+    //        cout << board[i][j] << " ";
+    //    }
+    //    cout << endl;
+    //}
+    //cout << "----------------------" << endl;
+    //cout << ret << endl;
 
     return ret;
 }
@@ -225,14 +247,16 @@ int dropBlocks(int mPlayer, int mCol)
             }
         }
     }
-    cout << "블럭 쌓음----------------------" << endl;
-    for (int i = 0; i < hSize; ++i) {
-        for (int j = 0; j < wSize; ++j) {
-            cout << board[i][j] << " ";
-        }
-        cout << endl;
-    }
-    cout << "----------------------" << endl;
+    //cout << "블럭 쌓음----------------------" << endl;
+    //for (int i = 0; i < hSize; ++i) 
+    //{
+    //    for (int j = 0; j < wSize; ++j) 
+    //    {
+    //        cout << board[i][j] << " ";
+    //    }
+    //    cout << endl;
+    //}
+    //cout << "----------------------" << endl;
 
     int opponent = (mPlayer == 1) ? 2 : 1;
 
