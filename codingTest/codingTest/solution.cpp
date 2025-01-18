@@ -1,12 +1,23 @@
 ﻿#include <vector>
 #include <iostream>
+#include <chrono> // 시간 측정 라이브러리
+
 using namespace std;
 
 vector<vector<int>> board;
+using namespace chrono; // 편리성을 위해 chrono 네임스페이스 사용
+
+// 테스트용 함수
+const int MAX_H = 201; // 최대 높이
+const int MAX_W = 201; // 최대 폭
+
 
 //검사용 변수
 vector<pair<int, int>> p1Comboblocks;
 vector<pair<int, int>> p2Comboblocks;
+
+vector<vector<int>> visited;
+vector<vector<int>> removeBlock;
 
 int wSize = 0;
 int hSize = 0;
@@ -19,7 +30,7 @@ int p2Score = 0;
 int dy[4] = { -1, 0, 1, 0 };
 int dx[4] = { 0, 1, 0, -1 };
 
-vector<vector<int>> visited;
+
 
 
 //테스트 케이스에 대한 초기화하는 함수. 각 테스트 케이스의 최초 1회 호출된다.
@@ -29,34 +40,33 @@ vector<vector<int>> visited;
 
 void init(int W, int H)
 {
-
-
     wSize = W;
     hSize = H;
 
     board = vector<vector<int>>(H, vector<int>(W, 0));
-   // visited = vector<vector<int>>(H, vector<int>(W, 0));
+    visited = vector<vector<int>>(H, vector<int>(W, 0));
+    removeBlock = vector<vector<int>>(H, vector<int>(W, 0));
 
     // visited 벡터의 용량을 미리 예약
-    for (int i = 0; i < hSize; ++i)
-    {
-        visited[i].reserve(wSize);
-    }
+    //for (int i = 0; i < hSize; ++i)
+    //{
+    //    visited[i].reserve(wSize);
+    //}
 
 
     p1Score = 0;
     p2Score = 0;
 
-    // 연결된 블록 리스트 초기화
-    p1Comboblocks.clear();
-    p2Comboblocks.clear();
 }
 
 void applyGravity()
 {
+
+    int writeRow = 0;
+
     for (int col = 0; col < wSize; ++col)
     {
-        int writeRow = hSize - 1;
+        writeRow = hSize - 1;
 
         for (int row = hSize - 1; row >= 0; --row)
         {
@@ -71,90 +81,142 @@ void applyGravity()
             board[writeRow--][col] = 0;
         }
     }
+
 }
 
-void removeBlocks(vector<vector<int>>& removeBlock, int dx, int dy, int player, int opponent)
+
+//최적화 전의 코드
+
+//void removeBlocks(vector<vector<int>>& removeBlock, int dx, int dy, int player, int opponent)
+//{
+//    //내 블럭
+//    for (int i = 0; i < hSize; ++i)
+//    {
+//        for (int j = 0; j < wSize; ++j)
+//        {
+//            p1Comboblocks.clear();
+//
+//            for (int k = 0;; ++k)
+//            {
+//                int x = i + k * dx;
+//                int y = j + k * dy;
+//
+//                if (x >= hSize || y >= wSize || x < 0 || y < 0)
+//                {
+//                    break;
+//                }
+//
+//                if (board[x][y] == player)
+//                {
+//                    p1Comboblocks.push_back({ x, y });
+//                }
+//                else
+//                {
+//                    break;
+//                }
+//            }
+//
+//            if (p1Comboblocks.size() >= 5)
+//            {
+//                for (auto& b : p1Comboblocks)
+//                {
+//                    removeBlock[b.first][b.second] = player;
+//                }
+//            }
+//
+//        }
+//    }
+//
+//    //상대블럭
+//    for (int i = 0; i < hSize; ++i)
+//    {
+//        for (int j = 0; j < wSize; ++j)
+//        {
+//            p2Comboblocks.clear();
+//
+//            for (int k = 0;; ++k)
+//            {
+//                int x = i + k * dx;
+//                int y = j + k * dy;
+//
+//                if (x >= hSize || y >= wSize || x < 0 || y < 0)
+//                {
+//                    break;
+//                }
+//
+//               if (board[x][y] == opponent)
+//                {
+//                    p2Comboblocks.push_back({ x, y });
+//                }
+//
+//                else
+//                {
+//                    break;
+//                }
+//            }
+//
+//            if (p2Comboblocks.size() >= 5)
+//            {
+//                for (auto& b : p2Comboblocks)
+//                {
+//                    removeBlock[b.first][b.second] = opponent;
+//                }
+//            }
+//        }
+//    }
+//}
+
+
+
+void dfsRemove(int y, int x, int dx, int dy, int player, vector<pair<int, int>>& comboblocks)
 {
-
-    //내 블럭
-    for (int i = 0; i < hSize; ++i)
+    if (y < 0 || x < 0 || y >= hSize || x >= wSize || board[y][x] != player)
     {
-        for (int j = 0; j < wSize; ++j)
-        {
-
-            //if (removeBlock[i][j] != 0)
-            //{
-            //    // 이미 처리된 블록은 건너뜁니다.
-            //    continue;
-            //}
-
-
-            p1Comboblocks.clear();
-
-            for (int k = 0;; ++k)
-            {
-                int x = i + k * dx;
-                int y = j + k * dy;
-
-                if (x >= hSize || y >= wSize || x < 0 || y < 0)
-                {
-                    break;
-                }
-
-                if (board[x][y] == player)
-                {
-                    p1Comboblocks.push_back({ x, y });
-                }
-                else
-                {
-                    break;
-                }
-            }
-
-            if (p1Comboblocks.size() >= 5)
-            {
-                for (auto& b : p1Comboblocks)
-                {
-                    removeBlock[b.first][b.second] = player;
-                }
-            }
-
-        }
+        return;
     }
 
-    //상대블럭
+    comboblocks.push_back({ y, x });
+    dfsRemove(y + dy, x + dx, dx, dy, player, comboblocks);
+}
+
+// 네 방향 탐색
+const int directions[4][2] =
+{
+    {1, 0},  // 아래쪽
+    {0, 1},  // 오른쪽
+    {1, 1},  // 오른쪽 아래 대각선
+    {1, -1}  // 왼쪽 아래 대각선
+};
+
+void removeBlocks(vector<vector<int>>& removeBlock, int player, int opponent, bool& bIsremove)
+{
+    vector<pair<int, int>> comboblocks;
+    comboblocks.reserve(20);
+    int currentPlayer  = 0;
+
     for (int i = 0; i < hSize; ++i)
     {
         for (int j = 0; j < wSize; ++j)
         {
-            p2Comboblocks.clear();
-
-            for (int k = 0;; ++k)
+            if (board[i][j] == player || board[i][j] == opponent)
             {
-                int x = i + k * dx;
-                int y = j + k * dy;
 
-                if (x >= hSize || y >= wSize || x < 0 || y < 0)
-                {
-                    break;
-                }
+                currentPlayer = board[i][j]; // 현재 탐색 대상 (player 또는 opponent)          
 
-               if (board[x][y] == opponent)
+                for (auto& dir : directions)
                 {
-                    p2Comboblocks.push_back({ x, y });
-                }
+                    comboblocks.clear();
+                    dfsRemove(i, j, dir[0], dir[1], currentPlayer, comboblocks);
 
-                else
-                {
-                    break;
-                }
-            }
-
-            if (p2Comboblocks.size() >= 5)
-            {
-                for (auto& b : p2Comboblocks)
-                {
-                    removeBlock[b.first][b.second] = opponent;
+                    // 5개 이상 연속된 블록을 찾은 경우
+                    if (comboblocks.size() >= 5)
+                    {
+                        for (auto& b : comboblocks)
+                        {
+                            removeBlock[b.first][b.second] = currentPlayer;
+                            bIsremove = true;
+                        }
+                    }
                 }
             }
         }
@@ -165,45 +227,55 @@ void removeBlocks(vector<vector<int>>& removeBlock, int dx, int dy, int player, 
 int getScore(int mPlayer, int mOpponent)
 {
     int ret = 0;
-
+    bool hasRemoved = false;
     while (true)
-    {
-        vector<vector<int>> removeBlock(hSize, vector<int>(wSize, 0));
+    {   
+        hasRemoved = false;
 
-        removeBlocks(removeBlock, 1, 1, mPlayer, mOpponent);  // 오른쪽 아래
-        removeBlocks(removeBlock, -1, 1, mPlayer, mOpponent); // 왼쪽 아래
-        removeBlocks(removeBlock, -1, -1, mPlayer, mOpponent); // 왼쪽 위
-        removeBlocks(removeBlock, 1, -1, mPlayer, mOpponent); // 오른쪽 위
-        removeBlocks(removeBlock, 0, 1, mPlayer, mOpponent);
-        removeBlocks(removeBlock, 1, 0, mPlayer, mOpponent);
 
-        bool hasRemoved = false;
-        for (int i = 0; i < hSize; ++i)
-        {
-            for (int j = 0; j < wSize; ++j)
-            {
-                if (removeBlock[i][j] == mPlayer)
-                {
-                    board[i][j] = 0;
-                    ++ret;
-                    hasRemoved = true;
-                }
+        removeBlocks(removeBlock, mPlayer, mOpponent, hasRemoved);
+        //removeBlocks(removeBlock, -1, 1, mPlayer, mOpponent); // 왼쪽 아래
+        //removeBlocks(removeBlock, -1, -1, mPlayer, mOpponent); // 왼쪽 위
+        //removeBlocks(removeBlock, 1, -1, mPlayer, mOpponent); // 오른쪽 위
+        //removeBlocks(removeBlock, 0, 1, mPlayer, mOpponent);
+        //removeBlocks(removeBlock, 1, 0, mPlayer, mOpponent);
 
-                //상대 블럭이라면 없애지만 점수를 추가하지 않는다
-                if (removeBlock[i][j] == mOpponent)
-                {
-                    board[i][j] = 0;
-                    hasRemoved = true;
-                }
-            }
-        }
 
+        //제거 할 블럭이 더이상 없다면 반복문 종료
         if (hasRemoved == false)
         {
             break;
         }
 
+
+
+        if (hasRemoved == true)
+        {
+            for (int i = 0; i < hSize; ++i)
+            {
+                for (int j = 0; j < wSize; ++j)
+                {
+                    if (removeBlock[i][j] != 0)
+                    {
+                        board[i][j] = 0; // 블록 제거
+
+                        if (removeBlock[i][j] == mPlayer)
+                        {
+                            ++ret;
+                        }
+                       // hasRemoved = true;
+                    }
+                }
+            }
+
+        }
+   
+
         applyGravity();
+
+        // removeBlock 배열을 초기화
+        fill(removeBlock.begin(), removeBlock.end(), vector<int>(wSize, 0));
+
     }
 
     if (mPlayer == 1)
@@ -214,6 +286,8 @@ int getScore(int mPlayer, int mOpponent)
     {
         p2Score += ret;
     }
+
+
     //cout << "삭제후----------------------" << endl;
     //for (int i = 0; i < hSize; ++i) 
     //{
@@ -231,13 +305,11 @@ int getScore(int mPlayer, int mOpponent)
 
 int dropBlocks(int mPlayer, int mCol)
 {
-    if (mCol == 12)
-    {
-        int a = 0;
-    }
+    int col = 0;
+
     for (int offset = 0; offset < 3; ++offset)
     {
-        int col = mCol + offset;
+         col = mCol + offset;
         for (int row = hSize - 1; row >= 0; --row)
         {
             if (board[row][col] == 0)
@@ -247,6 +319,7 @@ int dropBlocks(int mPlayer, int mCol)
             }
         }
     }
+
     //cout << "블럭 쌓음----------------------" << endl;
     //for (int i = 0; i < hSize; ++i) 
     //{
@@ -268,10 +341,13 @@ void dfs(int y, int x, int opponentPlayer, int player)
     visited[y][x] = 1;
     board[y][x] = player;
 
+    int ny = 0;
+    int nx = 0;
+
     for (int i = 0; i < 4; ++i)
     {
-        int ny = y + dy[i];
-        int nx = x + dx[i];
+         ny = y + dy[i];
+         nx = x + dx[i];
 
         if (ny < 0 || nx < 0 || ny >= hSize || nx >= wSize || visited[ny][nx] || board[ny][nx] != opponentPlayer)
         {
@@ -284,7 +360,8 @@ void dfs(int y, int x, int opponentPlayer, int player)
 
 int changeBlocks(int mPlayer, int mCol)
 {
-    visited = vector<vector<int>>(hSize, vector<int>(wSize, 0));
+
+    fill(visited.begin(), visited.end(), vector<int>(wSize, 0));
 
     int opponent = (mPlayer == 1) ? 2 : 1;
 
