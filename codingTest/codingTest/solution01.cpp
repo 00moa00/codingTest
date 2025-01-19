@@ -116,11 +116,14 @@ Result findTreasureChest(int Pieces[MAX_M][MAX_M])
 
     // 회전된 조각 지도를 미리 계산
     int rotatedPieces[4][MAX_M][MAX_M];
+
     memcpy(rotatedPieces[0], Pieces, sizeof(int) * MAX_M * MAX_M);
+
     for (int r = 1; r < 4; ++r)
     {
         rotate(rotatedPieces[r - 1], rotatedPieces[r]);
     }
+
 
     for (int rotation = 0; rotation < 4; ++rotation)
     {
@@ -141,7 +144,7 @@ Result findTreasureChest(int Pieces[MAX_M][MAX_M])
             }
             if (foundPivot == true)
             {
-                break; // 9가 없는 경우;
+                break; 
             }
             
         }
