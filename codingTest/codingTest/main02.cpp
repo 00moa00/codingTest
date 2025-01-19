@@ -74,31 +74,31 @@ static bool run()
 
 	return okay;
 }
-
-int main()
-{
-
-
-	setbuf(stdout, NULL);
-	freopen("sample_input.txt", "r", stdin);
-
-	int T, MARK;
-	scanf("%d%d", &T, &MARK);
-
-	for (int tc = 1; tc <= T; tc++)
-	{    // 시간 측정 시작
-		auto start = high_resolution_clock::now();
-
-		int score = run() ? MARK : 0;
-		printf("#%d %d\n", tc, score);
-
-		// 시간 측정 끝
-		auto end = high_resolution_clock::now();
-
-		// 경과 시간 계산
-		auto duration = duration_cast<milliseconds>(end - start);
-		cout << "getScore() Time: " << duration.count() << " ms" << endl;
-	}
-
-	return 0;
-}
+//
+//int main()
+//{
+//
+//
+//	setbuf(stdout, NULL);
+//	freopen("sample_input.txt", "r", stdin);
+//
+//	int T, MARK;
+//	scanf("%d%d", &T, &MARK);
+//
+//	for (int tc = 1; tc <= T; tc++)
+//	{    // 시간 측정 시작
+//		auto start = high_resolution_clock::now();
+//
+//		int score = run() ? MARK : 0;
+//		printf("#%d %d\n", tc, score);
+//
+//		// 시간 측정 끝
+//		auto end = high_resolution_clock::now();
+//
+//		// 경과 시간 계산
+//		auto duration = duration_cast<milliseconds>(end - start);
+//		cout << "getScore() Time: " << duration.count() << " ms" << endl;
+//	}
+//
+//	return 0;
+//}

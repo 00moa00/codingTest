@@ -13,8 +13,11 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="소스 파일\SwExpert">
+    <Filter Include="소스 파일\SwExpert02">
       <UniqueIdentifier>{c619a9d2-30f3-4389-a82c-23d9603d0920}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\SwExpert01">
+      <UniqueIdentifier>{0b2b579a-d4ce-49ef-9c10-2123af654aa1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -36,11 +39,17 @@
     <ClCompile Include="1043.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="solution.cpp">
-      <Filter>소스 파일\SwExpert</Filter>
+    <ClCompile Include="solution02.cpp">
+      <Filter>소스 파일\SwExpert02</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>소스 파일\SwExpert</Filter>
+    <ClCompile Include="main02.cpp">
+      <Filter>소스 파일\SwExpert02</Filter>
+    </ClCompile>
+    <ClCompile Include="main01.cpp">
+      <Filter>소스 파일\SwExpert01</Filter>
+    </ClCompile>
+    <ClCompile Include="solution01.cpp">
+      <Filter>소스 파일\SwExpert01</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
