@@ -80,17 +80,17 @@ static int run(int Ans)
 	return Ans;
 }
 
-int main()
-{
-	setbuf(stdout, NULL);
-	freopen("sample_input.txt", "r", stdin);
-
-	int T, Ans;
-	scanf("%d %d", &T, &Ans);
-
-	for (int tc = 1; tc <= T; tc++) {
-		printf("#%d %d\n", tc, run(Ans));
-	}
-
-	return 0;
-}
+//int main()
+//{
+//	setbuf(stdout, NULL);
+//	freopen("sample_input.txt", "r", stdin);
+//
+//	int T, Ans;
+//	scanf("%d %d", &T, &Ans);
+//
+//	for (int tc = 1; tc <= T; tc++) {
+//		printf("#%d %d\n", tc, run(Ans));
+//	}
+//
+//	return 0;
+//}

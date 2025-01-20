@@ -9,10 +9,6 @@ const int MAX_H = 201; // 최대 높이
 const int MAX_W = 201; // 최대 폭
 
 
-//검사용 변수
-//vector<pair<int, int>> p1Comboblocks;
-//vector<pair<int, int>> p2Comboblocks;
-
 int board[MAX_H][MAX_W];
 int visited[MAX_H][MAX_W];
 int removeBlock[MAX_H][MAX_W];
@@ -58,11 +54,6 @@ void init(int W, int H)
             removeBlock[i][j] = 0;
         }
     }
-    // visited 벡터의 용량을 미리 예약
-    //for (int i = 0; i < hSize; ++i)
-    //{
-    //    visited[i].reserve(wSize);
-    //}
 
 
     p1Score = 0;
@@ -194,6 +185,7 @@ void dfsRemove(int y, int x, int dx, int dy, int player, vector<pair<int, int>>&
 void removeBlocks(int player, int opponent, bool& bIsremove)
 {
     vector<pair<int, int>> comboblocks;
+
     comboblocks.reserve(20);
     int currentPlayer  = 0;
 
@@ -203,7 +195,6 @@ void removeBlocks(int player, int opponent, bool& bIsremove)
         {
             if (board[i][j] == player || board[i][j] == opponent)
             {
-
                 currentPlayer = board[i][j]; // 현재 탐색 대상 (player 또는 opponent)          
 
                 for (auto& dir : directions)
@@ -250,8 +241,6 @@ int getScore(int mPlayer, int mOpponent)
             break;
         }
 
-
-
         if (hasRemoved == true)
         {
             for (int i = 0; i < hSize; ++i)
@@ -266,7 +255,6 @@ int getScore(int mPlayer, int mOpponent)
                         {
                             ++ret;
                         }
-                       // hasRemoved = true;
                     }
                 }
             }
@@ -291,18 +279,6 @@ int getScore(int mPlayer, int mOpponent)
     }
 
 
-    //cout << "삭제후----------------------" << endl;
-    //for (int i = 0; i < hSize; ++i) 
-    //{
-    //    for (int j = 0; j < wSize; ++j)
-    //    {
-    //        cout << board[i][j] << " ";
-    //    }
-    //    cout << endl;
-    //}
-    //cout << "----------------------" << endl;
-    //cout << ret << endl;
-
     return ret;
 }
 
@@ -323,23 +299,13 @@ int dropBlocks(int mPlayer, int mCol)
         }
     }
 
-    //cout << "블럭 쌓음----------------------" << endl;
-    //for (int i = 0; i < hSize; ++i) 
-    //{
-    //    for (int j = 0; j < wSize; ++j) 
-    //    {
-    //        cout << board[i][j] << " ";
-    //    }
-    //    cout << endl;
-    //}
-    //cout << "----------------------" << endl;
 
     int opponent = (mPlayer == 1) ? 2 : 1;
 
     return getScore(mPlayer, opponent);
 }
 
-void dfs(int y, int x, int opponentPlayer, int player)
+void dfsChange(int y, int x, int opponentPlayer, int player)
 {
     visited[y][x] = 1;
     board[y][x] = player;
@@ -357,22 +323,19 @@ void dfs(int y, int x, int opponentPlayer, int player)
             continue;
         }
 
-        dfs(ny, nx, opponentPlayer, player);
+        dfsChange(ny, nx, opponentPlayer, player);
     }
 }
 
 int changeBlocks(int mPlayer, int mCol)
 {
-
-    //fill(visited.begin(), visited.end(), vector<int>(wSize, 0));
-
     memset(visited, 0, sizeof(visited));
 
     int opponent = (mPlayer == 1) ? 2 : 1;
 
     if (board[hSize - 1][mCol] == opponent)
     {
-        dfs(hSize - 1, mCol, opponent, mPlayer);
+        dfsChange(hSize - 1, mCol, opponent, mPlayer);
     }
 
     return getScore(mPlayer, opponent);
