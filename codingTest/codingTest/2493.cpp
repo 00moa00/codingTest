@@ -36,26 +36,26 @@ vector<int> fun(const vector<int>& heights)
     return result;
 }
 
-int main()
-{
-    int n;
-    cin >> n;
-
-    vector<int> heights(n);
-
-    for (int i = 0; i < n; ++i)
-    {
-        cin >> heights[i];
-    }
-
-    vector<int> result = fun(heights);
-
-    for (int i = 0; i < n; ++i)
-    {
-        cout << result[i] << " ";
-    }
-
-    cout << endl;
-
-    return 0;
-}
+//int main()
+//{
+//    int n;
+//    cin >> n;
+//
+//    vector<int> heights(n);
+//
+//    for (int i = 0; i < n; ++i)
+//    {
+//        cin >> heights[i];
+//    }
+//
+//    vector<int> result = fun(heights);
+//
+//    for (int i = 0; i < n; ++i)
+//    {
+//        cout << result[i] << " ";
+//    }
+//
+//    cout << endl;
+//
+//    return 0;
+//}
