@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stack>
 
 using namespace std;
 
@@ -15,25 +16,39 @@ int main()
 	cin >> n;
 
 
-	for (int i = n-1; i >= 0; --i)
+	for (int i = 0; i < n; ++i)
 	{
 		cin >> a[i];
 	}
 
+	stack<int> s;
+
 	for (int i = n - 1; i >= 0; --i)
 	{
-		int min = -1;
-
-		for (int j = i; j >= 0; --j)
+		//현재값보다 작은 수 삭제.
+		//현재값을 어차피 넣을거고, 현재값(가장 왼쪽)보다 작은 값들은 오큰수에서 의미가 없음. 
+		while (s.empty() == false && s.top() <= a[i])
 		{
-			if (a[j] > a[i])
-			{
-				min = a[j];
-				break;
-			}
+			s.pop();
+		}
+		
+		if (s.empty() == true)
+		{
+			ret[i] = - 1;
 		}
 
-		cout<<min;
+		else
+		{
+			ret[i] = s.top();
+		}
+
+		s.push(a[i]);
+	}
+
+
+	for (int i = 0; i < n; ++i)
+	{
+		cout << ret[i] << " ";
 	}
 
 	return 0;
