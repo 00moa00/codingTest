@@ -19,26 +19,14 @@
     <Filter Include="소스 파일\SwExpert01">
       <UniqueIdentifier>{0b2b579a-d4ce-49ef-9c10-2123af654aa1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\백준">
+      <UniqueIdentifier>{3a63a657-4582-4b25-8dd8-908609ac9e51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="소스 파일\프로그래머스">
+      <UniqueIdentifier>{d815b85a-af62-4ce5-ab1e-10eb17dd2ff2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="codingTest.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="16235.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="2589.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="77485.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="13300.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="1043.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="solution02.cpp">
       <Filter>소스 파일\SwExpert02</Filter>
     </ClCompile>
@@ -51,20 +39,41 @@
     <ClCompile Include="solution01.cpp">
       <Filter>소스 파일\SwExpert01</Filter>
     </ClCompile>
-    <ClCompile Include="1406.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="17298.cpp">
+      <Filter>소스 파일\백준</Filter>
     </ClCompile>
-    <ClCompile Include="10773.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="codingTest.cpp">
+      <Filter>소스 파일\프로그래머스</Filter>
     </ClCompile>
-    <ClCompile Include="2493.cpp">
-      <Filter>소스 파일</Filter>
+    <ClCompile Include="77485.cpp">
+      <Filter>소스 파일\프로그래머스</Filter>
+    </ClCompile>
+    <ClCompile Include="16235.cpp">
+      <Filter>소스 파일\백준</Filter>
+    </ClCompile>
+    <ClCompile Include="13300.cpp">
+      <Filter>소스 파일\백준</Filter>
     </ClCompile>
     <ClCompile Include="11003.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\백준</Filter>
+    </ClCompile>
+    <ClCompile Include="10773.cpp">
+      <Filter>소스 파일\백준</Filter>
+    </ClCompile>
+    <ClCompile Include="2589.cpp">
+      <Filter>소스 파일\백준</Filter>
     </ClCompile>
     <ClCompile Include="2577.cpp">
-      <Filter>소스 파일</Filter>
+      <Filter>소스 파일\백준</Filter>
+    </ClCompile>
+    <ClCompile Include="2493.cpp">
+      <Filter>소스 파일\백준</Filter>
+    </ClCompile>
+    <ClCompile Include="1406.cpp">
+      <Filter>소스 파일\백준</Filter>
+    </ClCompile>
+    <ClCompile Include="1043.cpp">
+      <Filter>소스 파일\백준</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
