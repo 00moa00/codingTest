@@ -132,13 +132,24 @@
     <ClCompile Include="11003.cpp" />
     <ClCompile Include="13300.cpp" />
     <ClCompile Include="1406.cpp" />
-    <ClCompile Include="16235.cpp" />
+    <ClCompile Include="16235.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="17298.cpp" />
+    <ClCompile Include="2407.cpp" />
     <ClCompile Include="2493.cpp" />
     <ClCompile Include="2577.cpp" />
     <ClCompile Include="2589.cpp" />
     <ClCompile Include="77485.cpp" />
-    <ClCompile Include="codingTest.cpp" />
+    <ClCompile Include="codingTest.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="main01.cpp" />
     <ClCompile Include="main02.cpp" />
     <ClCompile Include="solution01.cpp" />

@@ -48,9 +48,6 @@
     <ClCompile Include="77485.cpp">
       <Filter>소스 파일\프로그래머스</Filter>
     </ClCompile>
-    <ClCompile Include="16235.cpp">
-      <Filter>소스 파일\백준</Filter>
-    </ClCompile>
     <ClCompile Include="13300.cpp">
       <Filter>소스 파일\백준</Filter>
     </ClCompile>
@@ -73,6 +70,12 @@
       <Filter>소스 파일\백준</Filter>
     </ClCompile>
     <ClCompile Include="1043.cpp">
+      <Filter>소스 파일\백준</Filter>
+    </ClCompile>
+    <ClCompile Include="2407.cpp">
+      <Filter>소스 파일\백준</Filter>
+    </ClCompile>
+    <ClCompile Include="16235.cpp">
       <Filter>소스 파일\백준</Filter>
     </ClCompile>
   </ItemGroup>
