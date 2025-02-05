@@ -25,6 +25,9 @@
     <Filter Include="소스 파일\프로그래머스">
       <UniqueIdentifier>{d815b85a-af62-4ce5-ab1e-10eb17dd2ff2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\SwExpert03">
+      <UniqueIdentifier>{1f3cb3f7-f0e7-4fa4-96d9-28d02e9383ca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="solution02.cpp">
@@ -77,6 +80,12 @@
     </ClCompile>
     <ClCompile Include="16235.cpp">
       <Filter>소스 파일\백준</Filter>
+    </ClCompile>
+    <ClCompile Include="main03.cpp">
+      <Filter>소스 파일\SwExpert03</Filter>
+    </ClCompile>
+    <ClCompile Include="solution03.cpp">
+      <Filter>소스 파일\SwExpert03</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
